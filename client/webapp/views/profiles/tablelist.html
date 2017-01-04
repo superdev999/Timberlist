@@ -1,0 +1,14 @@
+<table class="table table-striped">
+  <thead>
+    <th>Name</th>
+    <th>Distance</th>
+  </thead>
+  <tr ng-repeat="profile in vm.profiles">
+    <td>
+      <a ng-href="#/userProfile/{{profile.id}}/view">
+        {{profile.company_name || (profile.first_name + " " + profile.last_name)}}
+      </a>
+    </td>
+    <td>{{profile.distance | number : 2}} miles</td>
+  </tr>
+</table>

@@ -1,0 +1,140 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="modal.dismiss('No bueno!')" aria-hidden="true">×</button>
+
+<h3>New Listing</h3>
+</div>
+<div class="modal-body">
+  <div>
+    <div class="btn-group">
+      <button class="btn"
+        ng-class="{'btn-primary':modal.isCurrentStep(0)}"
+        ng-click="modal.setCurrentStep(0)">Tract</button>
+      <button class="btn"
+        ng-class="{'btn-primary':modal.isCurrentStep(1)}"
+        ng-click="modal.setCurrentStep(1)">Location</button>
+      <button class="btn"
+        ng-class="{'btn-primary':modal.isCurrentStep(2)}"
+        ng-click="modal.setCurrentStep(2)">Terms</button>
+      <button class="btn"
+        ng-class="{'btn-primary':modal.isCurrentStep(3)}"
+        ng-click="modal.setCurrentStep(3)">Files</button>
+      <button class="btn"
+        ng-class="{'btn-primary':modal.isCurrentStep(4)}"
+        ng-click="modal.setCurrentStep(4)">Publish</button>
+    </div>
+
+    <form class="form-horizontal" role="form" ng-controller="ListingEditCtrl" ng-submit="updateListing()">
+      <div ng-switch="modal.getCurrentStep()" class="slide-frame">
+        <div ng-switch-when="one" class="wave">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label for="tract_title" class="col-sm-2 control-label">Tract Name</label>
+                <div class="col-sm-8">
+                  <input type="text" ng-model="tract.title" class="form-control" id="tract_title" placeholder="Tract Name" ng-change="autosaveListing()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="acreage" class="col-sm-2 control-label">Acreage</label>
+                <div class="col-sm-8">
+                  <input type="text" ng-model="tract.acreage" class="form-control" id="acreage" placeholder="Acreage" ng-change="autosaveListing()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="pin" class="col-sm-2 control-label">Pin</label>
+                <div class="col-sm-8">
+                  <input type="text" ng-model="tract.pin" class="form-control" id="pin" placeholder="Pin" ng-change="autosaveListing()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"/>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div ng-switch-when="two" class="wave">
+          <div class="row">
+              <div class="col-sm-12">
+              <script type="text/ng-template" id="searchbox.tpl.html">
+                  <input type="text"
+                         placeholder="Search"
+                         style="width:270px; height:30px;">
+              </script>
+              <form>
+                <ui-gmap-google-map id="map-small" center='map.center' zoom='map.zoom' events='map.events'>
+                  <ui-gmap-search-box options="searchbox.options" template="searchbox.template"
+                      events="searchbox.events" position="searchbox.position"></ui-gmap-search-box>
+                  <ui-gmap-marker coords="map.marker.coords" options="map.marker.options" idkey="map.marker.id">
+                  </ui-gmap-marker>
+                </ui-gmap-google-map>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div ng-switch-when="three" class="wave">
+          <div class="form-group">
+            <label for="end_date" class="col-sm-2 control-label">End Date</label>
+            <div class="col-sm-5">
+              <div class="dropdown">
+                <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown"  data-target="#" href="">
+                  <div class="input-group"><input type="text" id="end_date" class="form-control" data-ng-model="listing.end_date"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                  </div>
+                </a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                  <datetimepicker data-ng-model="listing.end_date" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }"/>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="description" class="col-sm-2 control-label">Description</label>
+            <div class="col-sm-8">
+              <textarea ng-model="listing.description" class="form-control" id="description" placeholder="My Description" ng-change="autosaveListing()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div ng-switch-when="four" class="wave">
+          <form class="form-horizontal" role="form" name="fileForm">
+            <div class="form-group">
+              <label class="col-sm-2 control-label">Files</label>
+              <div class="col-sm-10">
+                <ul>
+                  <li ng-repeat="file in listing.files">
+                    <a target="_blank" ng-href='{{file.file}}'>{{file.filename}}</a>
+                    <span ng-show="file.description">- {{file.description}}</span>
+                    <a ng-if="listing.owner_email == current_user.email" class="btn btn-danger btn-sm"  ng-click="deleteFile(file)">Delete</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label">PDF Upload</label>
+              <div class="col-sm-10">
+                  <input type="file" ngf-select ng-model="file" ngf-pattern="application/pdf"  ngf-max-size="30MB" id="file"/>
+                  <span class="progress" ng-show="progress >= 0">
+                    <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+                  </span>
+                  <span ng-show="fileComplete">Upload Successful</span>
+                  <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                  <button type="submit" class="btn btn-primary" ng-click="uploadFile(file)">Save</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div ng-switch-when="five" class="wave">
+          <div class="form-group">
+            <label for="published" class="col-sm-3 control-label">Publish now?</label>
+            <div class="col-sm-7">
+              <input type="checkbox" ng-model="listing.published" class="form-control" id="published" ng-change="autosaveListing()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="modal.handlePrevious()" ng-show="!modal.isFirstStep()">Back</button>
+    <button class="btn btn-primary" ng-click="modal.handleNext()">{{modal.getNextLabel()}}</button>
+</div>

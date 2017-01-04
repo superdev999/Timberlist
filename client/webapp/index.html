@@ -1,0 +1,138 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/ng-img-crop-full-extended/compile/minified/ng-img-crop.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <link rel="stylesheet" href="bower_components/angular-bootstrap-datetimepicker/src/css/datetimepicker.css" type="text/css" />
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    <!-- favicons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/static/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/static/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/static/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/static/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/static/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/static/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/static/apple-touch-icon-152x152.png">
+    <link rel="icon" type="image/png" href="/static/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/static/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/static/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/static/manifest.json">
+    <link rel="mask-icon" href="/static/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="apple-mobile-web-app-title" content="TimberList">
+    <meta name="application-name" content="TimberList">
+    <meta name="msapplication-TileColor" content="#603cba">
+    <meta name="msapplication-TileImage" content="/static/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <!-- end favicons -->
+  </head>
+  <body ng-app="timberListApp" ng-controller="MasterCtrl">
+    <!--[if lt IE 7]>
+    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <nav ng-cloak class="navbar navbar-default navbar-fixed-top">
+      <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle"
+                    ng-init="isCollapsed = true"  ng-click="isCollapsed = !isCollapsed">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand tl-logo" href="#/"><img alt="TimberList" src="images/timberlist-logo.png" height="48"/></a>
+          </div>
+          <div class="navbar-collapse" ng-class="{collapse: isCollapsed}" ng-click="isCollapsed = !isCollapsed">
+            <ul class="nav navbar-nav navbar-right">
+              <!--<li ng-hide="authenticated"><a href="#/passwordReset" class="btn btn-primary">Send Password Reset</a></li>-->
+              <!--<li ng-hide="authenticated"><a ng-click="goConfirmReset()" class="btn btn-primary">Confirm Password Reset</a></li>-->
+              <li ng-hide="authenticated"><a ng-href="#/register">Register</a></li>
+              <li ng-hide="authenticated"><a href="#/login">Login</a></li>
+              <!--<li ng-hide="authenticated"><a ng-click="goVerify()" class="btn btn-primary">Verify Email</a></li>-->
+              <li ng-show="authenticated"><a href="#/portfolio">Portfolio</a></li>
+              <li ng-show="authenticated"><a href="#/passwordChange">Change Password</a></li>
+              <li ng-show="authenticated"><a href="#/userProfile/">Profile</a></li>
+              <li ng-show="current_user.is_staff"><a href="/admin">Admin</a></li>
+              <li ng-show="authenticated"><a href="#/logout">Logout</a></li>
+            </ul>
+          </div>
+      </div>
+    </nav>
+
+    <!-- Add your site or application content here -->
+    <div class="viewport" ng-cloak ng-view=""></div>
+
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/json3/lib/json3.min.js"></script>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-simple-logger/dist/angular-simple-logger.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+    <script src="bower_components/ngGeolocation/ngGeolocation.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/ng-img-crop-full-extended/compile/minified/ng-img-crop.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+    <script type="text/javascript" src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
+    <script type="text/javascript" src="bower_components/angular-bootstrap-datetimepicker/src/js/datetimepicker.templates.js"></script>
+
+    <!-- build:js scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/mapwindow.js"></script>
+    <script src="scripts/controllers/register.js"></script>
+    <script src="scripts/controllers/passwordreset.js"></script>
+    <script src="scripts/controllers/passwordresetconfirm.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+    <script src="scripts/controllers/verifyemail.js"></script>
+    <script src="scripts/controllers/logout.js"></script>
+    <script src="scripts/controllers/userprofile.js"></script>
+    <script src="scripts/controllers/passwordchange.js"></script>
+    <script src="scripts/services/djangoAuth.js"></script>
+    <script src="scripts/services/validate.js"></script>
+    <script src="scripts/controllers/master.js"></script>
+    <script src="scripts/controllers/restricted.js"></script>
+    <script src="scripts/controllers/authrequired.js"></script>
+    <script src="scripts/controllers/tract.js"></script>
+    <script src="scripts/controllers/listing.js"></script>
+    <script src="scripts/services/tract.js"></script>
+    <script src="scripts/services/listing.js"></script>
+    <script src="scripts/services/userprofile.js"></script>
+    <script src="scripts/directives/fileonchange.js"></script>
+    <script src="scripts/controllers/portfolio.js"></script>
+    <!-- endbuild -->
+
+</body>
+</html>

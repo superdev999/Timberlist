@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>{{ listing.tract.title }}
+        <div class="btn-group">
+          <a ng-if="listings" class="btn btn-primary btn-sm" ng-href="#/listings/{{ listing.id }}/view">View</a>
+          <a ng-if="listing.owner_email == current_user.email" class="btn btn-primary btn-sm" ng-href="#/listings/{{ listing.id }}/edit">Edit</a>
+          <a ng-if="listing.owner_email == current_user.email" class="btn btn-danger btn-sm"  ng-click="deleteListing(listing)">Delete</a>
+        </div>
+      </h1>
+      <div class="h3">{{ listing.tract.acreage | number}} acres </div>
+      <div class="h5">Bidding ends {{ listing.end_date | date:"MMMM d 'at' h:mma" }}</div>
+    </div>
+  </div>
+  <div class="panel panel-default panel-body with-newlines" style="font-size:16px">{{ listing.description }}</div>
+  <div ng-if="listing.files.length > 0" class="panel panel-default">
+    <div class="panel-heading"><span class="glyphicon glyphicon-paperclip"></span> Files</div>
+    <div class="panel-body table-responsive">
+      <table class="table table-striped">
+        <tr ng-repeat="file in listing.files">
+          <td>
+            <a target="_blank" ng-href='{{file.file}}'>{{file.filename}}</a>
+          </td>
+          <td>
+            <span ng-show="file.description">- {{file.description}}</span>
+          </td>
+          <td>
+            <a ng-if="listing.owner_email == current_user.email" class="btn btn-danger btn-xs"  ng-click="deleteFile(file)">Delete</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <table>
+    <tr>
+      <td style="padding:5px">
+        <img class="profileAreaSmall img-rounded" ng-src="{{listing.photo || 'images/profile-none.png' }}" />
+      </td>
+      <td style="padding:5px">
+        {{ listing.owner_first_name }} {{ listing.owner_last_name }}<br>
+        {{ listing.owner_email }}
+      </td>
+    </tr>
+  </table>
+  <div class="row">
+    <div class="col-sm-12">
+      Posted {{ listing.when_added | date:"MM/dd/yyyy 'at' h:mma" }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <h2>Closest mills</h2>
+      <tl-profile-list ng-if="mill_query_opts.lat_long" query_opts="mill_query_opts"></tl-profile-list>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row">
+    <h1>My Listings
+      <div class="h4">
+        <span class="glyphicon glyphicon-plus text-success"></span>
+        <a ng-click="open()">New Listing</a>
+      </div>
+    </h1>
+    <tl-listing-list query_opts="active_query_opts"></tl-listing-list>
+  </div>
+  <div class="row">
+    <h1>Draft Listings</h1>
+    <tl-listing-list query_opts="draft_query_opts"></tl-listing-list>
+  </div>
+  <div class="row">
+    <h1>Closed Listings</h1>
+    <tl-listing-list query_opts="closed_query_opts"></tl-listing-list>
+  </div>
+</div>

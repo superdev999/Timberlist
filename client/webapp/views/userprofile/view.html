@@ -1,0 +1,55 @@
+<div id="userProfile_view" ng-controller="UserprofileViewCtrl" class="container">
+  <div ng-if="authenticated" name="userProfileForm">
+    <div class="row">
+      <div class="col-sm-12">
+        <table>
+          <tr>
+            <td style="padding-bottom:10px; padding-top:5px;">
+              <img class="profileArea img-rounded" ng-src="{{croppedDataUrl || model.photo || 'images/profile-none.png' }}" />
+            </td>
+            <td style="padding:5px">
+              <h1>{{ model.first_name }} {{ model.last_name }}</h1>
+              <h3>
+                <span ng-if="model.mill">
+                  {{comma=', ';""}}Mill owner
+                </span>
+                <span ng-if="model.buyer">
+                  {{comma}}{{comma=', ';""}}Timber buyer
+                </span>
+                <span ng-if="model.consultant">
+                  {{comma}}Registered consultant
+                </span>
+              </h3>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8 panel panel-default">
+       <div class="panel-body with-newlines" ng-if="model.description && model.description != ''">{{model.description}}</div>
+      </div>
+      <div class="col-sm-4">
+        <address>
+          <strong>{{model.company_name}}</strong><br>
+          <a href="mailto:#">{{model.email}}</a><br>
+          {{model.address1}}<br>
+          {{model.address2}}<br ng-if="model.address2 && model.address2 != ''">
+          {{model.city}}, {{model.state}} {{model.zipcode}}<br>
+          <abbr title="Phone">P:</abbr> {{model.phone}}<br>
+          <abbr title="Cell">C:</abbr> {{model.cell}}<br>
+          <abbr title="Fax">F:</abbr> {{model.fax}}<br>
+        </address>
+      </div>
+    </div>
+    <div class="row">
+      <h2>Active Listings</h2>
+      <tl-listing-list query_opts="active_query_opts"></tl-listing-list>
+    </div>
+    <div class="row">
+      <h2>Closed Listings</h2>
+      <tl-listing-list query_opts="closed_query_opts"></tl-listing-list>
+    </div>
+  </div>
+  <div class="alert alert-warning" ng-if="authenticated == false">You need to be logged in to do this.</div>
+</div>

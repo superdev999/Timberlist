@@ -1,0 +1,226 @@
+/*
+  Allow angular.js to be loaded in body, hiding cloaked elements until
+  templates compile.  The !important is important given that there may be
+  other selectors that are more specific or come later and might alter display.
+ */
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
+/* Space out content a bit */
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  height: 100%
+}
+
+.tl-logo {
+  padding: 0px;
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.marketing,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Custom page footer */
+.footer {
+  color: #444;
+}
+
+/* Customize container */
+@media (min-width: 768px) {
+  .container {
+    max-width: 765px;
+  }
+}
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}
+
+.viewport {
+  position:absolute;
+  top: 50px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+#map-small .angular-google-map-container {
+  height: 300px;
+  background-color: #C0D6BF;
+}
+
+#map-large .angular-google-map-container {
+  background-color: #C0D6BF;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+
+@media (min-width: 768px){
+  #left {
+    position: absolute;
+    margin-top: 0px;
+    top: 0px;
+    bottom: 0;
+    left: 0;
+    width: 75%;
+    overflow-y: hidden;
+  }
+
+  #right {
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    overflow-y: auto;
+    width: 25%;
+  }
+}
+
+.cropArea {
+  background: #E4E4E4;
+  overflow: hidden;
+  width:350px;
+  height:275px;
+}
+
+.profileArea {
+  overflow: hidden;
+  width:125px;
+  height:125px;
+}
+
+.profileAreaSmall {
+  overflow: hidden;
+  width:50px;
+  height:50px;
+}
+
+form .progress {
+    line-height: 15px;
+}
+.progress {
+    display: inline-block;
+    width: 100px;
+    border: 3px groove #CCC;
+}
+.progress div {
+    font-size: smaller;
+    background: orange;
+    width: 0;
+}
+
+.glyphicon.spinning {
+    animation: spin 2s infinite linear;
+    -webkit-animation: spin2 2s infinite linear;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg); }
+    to { transform: scale(1) rotate(360deg); }
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg); }
+    to { -webkit-transform: rotate(360deg); }
+}
+
+.col-fixed-60{
+    width:60px;
+    padding-left:15px;
+    position:fixed;
+    height:100%;
+}
+
+.col-fixed-110{
+    width:110px;
+    padding-left:15px;
+    position:fixed;
+    height:100%;
+}
+
+.col-offset-60{
+    padding-left:75px;
+}
+
+.col-offset-110{
+    padding-left:125px;
+}
+
+.with-newlines {
+  white-space: pre-wrap;
+}
+
+/* Currently only used to stop a 2s delay on in-if hide */
+.ng-animate.no-animate {
+    transition: 0s none;
+    -webkit-transition: 0s none;
+    animation: 0s none;
+    -webkit-animation: 0s none;
+}
+
+/* wizard styles */
+.modal-body .btn-group {
+  margin-bottom: 10px;
+}
+
+.slide-frame {
+  position:relative;
+  height:300px;
+  overflow-x:hidden;
+}
+
+.slide-frame > div {
+  width:100%;
+}
+
+/*wizard animations*/
+.wave.ng-enter, .wave.ng-leave {
+  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+
+.wave.ng-enter {
+  position: absolute;
+  left:100%;
+}
+
+.wave.ng-enter-active {
+  left:0;
+}
+
+.wave.ng-leave {
+  position: absolute;
+  left:0;
+}
+
+.wave.ng-leave-active {
+  left:-100%;
+}

@@ -1,0 +1,32 @@
+<h3>Edit Your Listing</h3>
+
+<form class="form-horizontal" role="form" ng-submit="updateListing()">
+  <div ng-include="'views/listing/form.html'"></div>
+</form>
+
+<form class="form-horizontal" role="form" name="fileForm">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Files</label>
+    <div class="col-sm-10">
+      <ul>
+        <li ng-repeat="file in listing.files">
+          <a target="_blank" ng-href='{{file.file}}'>{{file.filename}}</a>
+          <span ng-show="file.description">- {{file.description}}</span>
+          <a ng-if="listing.owner_email == current_user.email" class="btn btn-danger btn-sm"  ng-click="deleteFile(file)">Delete</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">PDF Upload</label>
+    <div class="col-sm-10">
+        <input type="file" ngf-select ng-model="file" ngf-pattern="application/pdf"  ngf-max-size="30MB" id="file"/>
+        <span class="progress" ng-show="progress >= 0">
+          <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+        </span>
+        <span ng-show="fileComplete">Upload Successful</span>
+        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+        <button type="submit" class="btn btn-primary" ng-click="uploadFile()">Save</button>
+    </div>
+  </div>
+</form>

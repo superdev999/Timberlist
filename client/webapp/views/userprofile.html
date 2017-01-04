@@ -1,0 +1,153 @@
+<div id="userProfile_view" ng-controller="UserprofileCtrl" class="container">
+    <div ng-if="complete == false">
+        <form role="form" ng-if="authenticated" name="userProfileForm" ng-submit="updateProfile(userProfileForm, model)" novalidate>
+          <div class="row">
+            <div class="form-group col-sm-3">
+                <label for="id_first_name">Company Name</label>
+                <input name="company_name" id="id_company_name" class="form-control" type="text" ng-model="model.company_name" placeholder="Company Name" />
+                <div class="alert alert-danger" ng-repeat="error in errors.company_name">{{error}}</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-sm-3">
+                <label for="id_first_name">First Name</label>
+                <input name="first_name" id="id_first_name" class="form-control" type="text" ng-model="model.first_name" placeholder="First Name" required/>
+                <div class="alert alert-danger" ng-repeat="error in errors.first_name">{{error}}</div>
+            </div>
+            <div class="form-group col-sm-3">
+                <label for="id_last_name">Last Name</label>
+                <input name="last_name" id="id_last_name" class="form-control" type="text" ng-model="model.last_name" placeholder="Last Name" required/>
+                <div class="alert alert-danger" ng-repeat="error in errors.last_name">{{error}}</div>
+            </div>
+            <div class="form-group col-sm-3">
+                <label for="id_email">Email</label>
+                <input name="email" id="id_email" class="form-control" type="email" ng-model="model.email" placeholder="Email" required />
+                <div class="alert alert-danger" ng-repeat="error in errors.email">{{error}}</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-sm-3">
+                <label for="id_phone">Phone</label>
+                <input name="phone" id="id_phone" class="form-control" type="text" ng-model="model.phone" placeholder="Phone" />
+                <div class="alert alert-danger" ng-repeat="error in errors.phone">{{error}}</div>
+            </div>
+            <div class="form-group col-sm-3">
+                <label for="id_cell">Cell</label>
+                <input name="cell" id="id_cell" class="form-control" type="text" ng-model="model.cell" placeholder="Cell" />
+                <div class="alert alert-danger" ng-repeat="error in errors.cell">{{error}}</div>
+            </div>
+            <div class="form-group col-sm-3">
+                <label for="id_fax">Fax</label>
+                <input name="fax" id="id_fax" class="form-control" type="text" ng-model="model.fax" placeholder="Fax" />
+                <div class="alert alert-danger" ng-repeat="error in errors.fax">{{error}}</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-sm-3">
+              <label for="id_address1">Address1</label>
+              <input name="address1" id="id_address1" class="form-control" type="text" ng-model="model.address1" placeholder="Address1" ng-change="autoComplete()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }" required/>
+              <div class="alert alert-danger" ng-repeat="error in errors.address1">{{error}}</div>
+              <label for="id_address2">Address2</label>
+              <input name="address2" id="id_address2" class="form-control" type="text" ng-model="model.address2" ng-init="model.address2=''" ng-change="autoComplete()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }" placeholder="Address2" />
+              <div class="alert alert-danger" ng-repeat="error in errors.address2">{{error}}</div>
+              <label for="id_zipcode">Zipcode</label>
+              <input name="zipcode" id="id_zipcode" class="form-control" type="text" ng-model="model.zipcode" placeholder="Zipcode" ng-change="autoComplete()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }" required/>
+              <div class="alert alert-danger" ng-repeat="error in errors.zipcode">{{error}}</div>
+              <label for="id_city">City</label>
+              <input name="city" id="id_city" class="form-control" type="text" ng-model="model.city" placeholder="City" ng-change="autoComplete()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }"/>
+              <div class="alert alert-danger" ng-repeat="error in errors.city">{{error}}</div>
+              <label for="id_county">County</label>
+              <input name="county" id="id_county" class="form-control" type="text" ng-model="model.county" placeholder="County" ng-change="autoComplete()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }" />
+              <div class="alert alert-danger" ng-repeat="error in errors.county">{{error}}</div>
+              <label for="id_state">State</label>
+              <input name="state" id="id_state" class="form-control" type="text" ng-model="model.state" placeholder="State" ng-change="autoComplete()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }" />
+              <div class="alert alert-danger" ng-repeat="error in errors.state">{{error}}</div>
+              <label for="id_country">Country</label>
+              <input name="country" id="id_country" class="form-control" type="text" ng-model="model.country" placeholder="Country" ng-change="autoComplete()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 500, 'blur': 0} }" />
+              <div class="alert alert-danger" ng-repeat="error in errors.country">{{error}}</div>
+              <label class="">Location</label>
+              <input type="hidden" id="id_lat_long" ng-model="model.lat_long"/>
+            </div>
+            <div ng-if="showPreview" class="col-sm-3 well">
+              Closest matching address:<br>
+              <span ng-if='processingPreview' class="glyphicon glyphicon-refresh spinning"></span>
+              <div ng-if="!processingPreview" >
+                {{modelPreview.address1}}<br ng-if="model.address2">
+                {{model.address2}}<br>
+                {{modelPreview.city}}, {{modelPreview.state}}<br>
+                {{modelPreview.zipcode}}<br>
+                {{ modelPreview.lat_long.coordinates[0] }}, {{ modelPreview.lat_long.coordinates[1] }}
+                <button type='button' ng-click="populate();"><span class="glyphicon glyphicon-arrow-left"></span> Autocomplete</button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-sm-8">
+                <p><strong>I want to</strong></p>
+                <label class="checkbox-inline" for="id_buyer">
+                <input name="buyer" type="checkbox" id="id_buyer" class="form-control" ng-model="model.buyer"/>
+                Buy timber</label>
+                <label class="checkbox-inline" for="id_seller">
+                <input name="seller" type="checkbox" id="id_seller" class="form-control" ng-model="model.seller"/>
+                Sell timber</label>
+                <label class="checkbox-inline" for="id_consultant">
+                <input name="consultant" type="checkbox" id="id_consultant" class="form-control" ng-model="model.consultant"/>
+                Represent timber sellers</label>
+                <label class="checkbox-inline" for="id_mill">
+                <input name="mill" type="checkbox" id="id_mill" class="form-control" ng-model="model.mill"/>
+                Mill timber</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-sm-8">
+                <label for="id_description">Profile</label>
+                <textarea name="description" id="id_description" class="form-control" rows="5" ng-model="model.description" placeholder="Type your profile here"></textarea>
+                <div class="alert alert-danger" ng-repeat="error in errors.profile">{{error}}</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-sm-2">
+              <button type="submit" ng-show="authenticated" class="btn btn-primary">Update Profile</button>
+            </div>
+          </div>
+        </form>
+        <form name="photoForm">
+          <div class="row">
+            <div class="form-group col-sm-12">
+              <hr>
+              <p><strong>Profile photo</strong></p>
+              <!--<input type="file" id="fileInput" file-on-change="handleFileSelect"/></div>-->
+              <button ngf-select ng-model="picFile" accept="image/*">Select Photo</button>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-sm-12">
+              <div class="form-group col-sm-6">
+                <div ngf-drop ng-model="picFile" ngf-pattern="image/*" class="cropArea">
+                  <img-crop image="picFile  | ngfDataUrl" result-image="croppedDataUrl" ng-init="croppedDataUrl=''" area-type="square" chargement="'Loading'"></img-crop>
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="row">
+                  <div><img class="profileArea img-rounded" ng-src="{{croppedDataUrl || model.photo}}" /></div>
+                  <button class="btn btn-primary"  ng-disabled="croppedDataUrl ? false : true" ng-click="uploadPhoto(croppedDataUrl, picFile.name, model)">Save Photo</button>
+                </div>
+                <div class="row">
+                  <span class="progress" ng-show="progress >= 0">
+                  <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+                  </span>
+                </div>
+                <div class="row">
+                  <span ng-show="photoComplete">Upload Successful</span>
+                  <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="alert alert-warning" ng-if="authenticated == false">You need to be logged in to do this.</div>
+    </div>
+    <div ng-if="complete == true">
+        <div class="alert alert-success">You have updated your profile.</div>
+    </div>
+</div>

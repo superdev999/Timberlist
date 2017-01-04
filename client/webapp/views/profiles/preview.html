@@ -1,0 +1,17 @@
+<div>
+  <img class="profileAreaSmall img-rounded" ng-src="{{userprofile.photo}}" />
+</div>
+<div>
+  <strong>{{ userprofile.first_name }} {{ userprofile.last_name }}</strong>
+</div>
+<div>
+  <span ng-if="userprofile.mill">
+    {{comma=', ';""}}Mill owner
+  </span>
+  <span ng-if="userprofile.buyer">
+    {{comma}}{{comma=', ';""}}Timber buyer
+  </span>
+  <span ng-if="userprofile.consultant">
+    {{comma}}Registered consultant
+  </span>
+</div>

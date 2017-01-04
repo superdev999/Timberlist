@@ -1,0 +1,5 @@
+<div ng-repeat="listing in listings">
+  <div ng-controller="MapWindowCtrl" ng-click="openTab('/listings/'+listing.id+'/view')" class="panel panel-default">
+    <div class="panel-body"><div ng-include="'views/listing/preview.html'"></div></div>
+  </div>
+</div>

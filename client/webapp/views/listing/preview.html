@@ -1,0 +1,4 @@
+<div class="h4">{{ listing.tract.title }}</div>
+<div><strong>{{ listing.tract.acreage | number}} acres</strong></div>
+<div><small>Bidding ends {{ listing.end_date | date:"MMMM d 'at' h:mma" }}</small></div>
+<div><small class="text-muted">Posted by: {{ listing.owner_first_name }} {{ listing.owner_last_name }}</small></div>

@@ -1,0 +1,15 @@
+<table class="table table-striped">
+  <thead>
+    <th>Title</th>
+    <th>Acres</th>
+    <th ng-if="query_opts.active">Ends</th>
+    <th ng-if="!query_opts.active">Ended</th>
+  </thead>
+  <tr ng-repeat="listing in vm.listings">
+    <td>
+      <a ng-href="#/listings/{{listing.id}}/view">{{listing.tract.title}}</a>
+    </td>
+    <td>{{ listing.tract.acreage | number}}</td>
+    <td>{{ listing.end_date | date:"MMMM d 'at' h:mma" }}</td>
+  </tr>
+</table>

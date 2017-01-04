@@ -1,0 +1,24 @@
+<div class="panel">
+  <div class="row">
+    <div class="col-sm-12 panel-heading clearfix">
+        <h3 class="panel-title">{{ tract.title }}</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 panel-heading clearfix">
+        <h3 class="panel-title">{{ tract.acreage }}</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 panel-heading clearfix">
+        <h3 class="panel-title">{{ tract.pin }}</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 btn-group">
+      <a ng-if="tracts" class="btn btn-primary btn-sm" ng-href="#/tracts/{{ tract.id }}/view">View</a>
+      <a ng-if="tract.owner_email == current_user.email" class="btn btn-primary btn-sm" ng-href="#/tracts/{{ tract.id }}/edit">Edit</a>
+      <a ng-if="tract.owner_email == current_user.email" class="btn btn-danger btn-sm"  ng-click="deleteTract(tract)">Delete</a>
+    </div>
+  </div>
+</div>

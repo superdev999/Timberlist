@@ -1,0 +1,47 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-8 col-md-9 map-large" id="left">
+      <ui-gmap-google-map id="map-large" center='map.center' zoom='map.zoom' options='map.options' dragging='map.dragging' events='map.events'>
+        <ui-gmap-markers models="map.markers" coords="'coords'" options="'options'" events="'events'" idkey="'id'">
+        </ui-gmap-markers>
+        <ui-gmap-window coords="selectedMarker.coords" show="map.showWindow" templateUrl="selectedMarker.template" templateParameter="selectedMarker">
+        </ui-gmap-window>
+      </ui-gmap-google-map>
+    </div>
+    <div id="right" class="col-sm-4 col-md-3">
+      <form ng-init="showMoreSearch = false" ng-controller="ListingListCtrl" class="form-horizontal well well-sm">
+        <div class="form-group form-group-sm">
+          <div class="col-md-12">
+            <label class="checkbox-inline"><input type="checkbox" ng-model="query_opts.enable_listings" ng-change="queryItems()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 750, 'blur': 0} }">Listings</label>
+            <label class="checkbox-inline"><input type="checkbox" ng-model="query_opts.enable_mills" ng-change="queryItems()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 750, 'blur': 0} }">Mills</label>
+            <label class="checkbox-inline"><input type="checkbox" ng-model="query_opts.enable_buyers" ng-change="queryItems()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 750, 'blur': 0} }">Buyers</label>
+            <label class="checkbox-inline"><input type="checkbox" ng-model="query_opts.enable_consultants" ng-change="queryItems()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 750, 'blur': 0} }">Consultants</label>
+          </div>
+        </div>
+        <div class="form-group form-group-sm">
+          <div ng-show="!showMoreSearch" class="col-md-12">
+            <button class="btn btn-primary btn-sm" ng-click="queryItems()"><span ng-if='listingsLoading || profilesLoading' class="glyphicon glyphicon-refresh spinning no-animate"></span><span ng-if='!listingsLoading && !profilesLoading' class="glyphicon glyphicon-search no-animate"></span> Update</button>
+            <a ng-show="!showMoreSearch" ng-click="showMoreSearch = !showMoreSearch">More options</a>
+            <a ng-show="showMoreSearch" ng-click="showMoreSearch = !showMoreSearch">Less options</a>
+          </div>
+        </div>
+        <div ng-show="showMoreSearch" class="form-group form-group-sm">
+          <label ng-show="showMoreSearch" for="min_acres" class="col-md-6 control-label">Min Acres</label>
+          <div ng-show="showMoreSearch" class="col-md-6">
+            <input type="text" class="form-control" ng-model="query_opts.min_acres" placeholder="0" id="min_acres" ng-model="query_opts.enable_listings" ng-change="queryItems()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 750, 'blur': 0} }"/>
+          </div>
+          <label ng-show="showMoreSearch" for="max_acres" class="col-md-6 control-label">Max Acres</label>
+          <div ng-show="showMoreSearch" class="col-md-6">
+            <input type="text" class="form-control" ng-model="query_opts.max_acres" placeholder="9999999" id="max_acres" ng-model="query_opts.enable_listings" ng-change="queryItems()" ng-model-options="{ updateOn: 'default blur', debounce: {'default': 750, 'blur': 0} }"/>
+          </div>
+          <div ng-show="showMoreSearch" class="col-md-12">
+            <button class="btn btn-primary btn-sm" ng-click="queryItems()"><span ng-if='listingsLoading || profilesLoading' class="glyphicon glyphicon-refresh spinning no-animate"></span><span ng-if='!listingsLoading && !profilesLoading' class="glyphicon glyphicon-search no-animate"></span> Update</button>
+            <a ng-show="!showMoreSearch" ng-click="showMoreSearch = !showMoreSearch">More options</a>
+            <a ng-show="showMoreSearch" ng-click="showMoreSearch = !showMoreSearch">Less options</a>
+          </div>
+        </div>
+      </form>
+      <div ng-controller="ListingListCtrl" ng-include="'views/listing/list.html'"></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,1 @@
+timberlistapp/static/timberlistapp/text.txt  shared resource in the app
